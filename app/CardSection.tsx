@@ -75,16 +75,28 @@ export default function CardSection() {
                 },
                 maxWidth: 500,
                 borderRadius: "0.6rem",
+                position: "relative",
+                overflow: "hidden",
                 backgroundImage:
-                  "url(https://www.split.io/wp-content/uploads/Blog-2160x1080_GitandGitHubatWork-1.jpg)",
+                  "url(https://v2-statics.s3.ap-south-1.amazonaws.com/banners/homeBanner/github-new-image.webp)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 color: "white",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                opacity: 0.8,
                 height: {
                   xs: "auto",
                   sm: "100%",
                 },
                 transition: "transform 0.3s, box-shadow 0.3s",
+                "&::before": {
+                  content: "''",
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 75%, rgba(0,0,0,0.85) 100%)",
+                  zIndex: 0,
+                },
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
@@ -92,15 +104,27 @@ export default function CardSection() {
               }}
               onClick={() => handleCardClick(item?.url)}
             >
-              <CardContent className="mt-3">
-                <Typography sx={{ fontSize: "1rem" }} gutterBottom>
+              <CardContent
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  backgroundColor: "rgba(0, 0, 0, 0.35)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  borderRadius: "0.5rem",
+                  m: 2,
+                  px: 2.5,
+                  py: 2,
+                  backdropFilter: "blur(1.5px)",
+                }}
+              >
+                <Typography sx={{ fontSize: "1rem", fontWeight: 600 }} gutterBottom>
                   {item?.name}
                 </Typography>
-                <Typography>{item?.Author}</Typography>
-                <Typography variant="body2" sx={{ my: 1.5 }}>
+                <Typography sx={{ opacity: 0.9 }}>{item?.Author}</Typography>
+                <Typography variant="body2" sx={{ my: 1.5, color: "#f0f0f0" }}>
                   {item?.technology}
                 </Typography>
-                <Typography variant="body2" component="div">
+                <Typography variant="body2" component="div" sx={{ color: "#e8e8e8" }}>
                   {item?.description}
                 </Typography>
               </CardContent>
