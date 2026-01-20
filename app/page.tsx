@@ -5,6 +5,7 @@ import TopNavbar from "./TopNavbar";
 import Footer from "./Footer";
 
 export default function Home() {
+  console.log("Home Page Rendered");
   return (
     <div>
       <title>Nazir- Portfolio</title>
