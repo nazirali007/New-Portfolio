@@ -1,137 +1,144 @@
 "use client";
 
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { motion } from "framer-motion";
 
 const projects = [
+  
+  {
+    name: "Url Shortener Web Application",
+    technology: ["Next.js", "Redux", "JavaScript"],
+    description:
+      "A web application that allows users to shorten long URLs into concise, shareable links with analytics tracking.",
+    url: "https://github.com/nazirali007/url-shortner",
+  },
   {
     name: "Dating App Admin Panel",
-    technology: "Javascript,ReactJs ,Redux",
-    Author: "Nazir Ali Siddiqui",
+    technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Created a web application an adult dating platform facilitating client-provider matchmaking",
+      "Built a web application for an adult dating platform facilitating client-provider matchmaking with admin controls.",
     url: "https://github.com/nazirali007/Roses-Web-Panel",
   },
   {
     name: "Bowling Web Application",
-    technology: "Javascript,ReactJs ,Redux",
-    Author: "Nazir Ali Siddiqui",
+    technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Developed a bowling game website featuring live scoring for multiple leagues and teams",
+      "Developed a bowling game website featuring live scoring for multiple leagues and teams with real-time updates.",
     url: "https://github.com/nazirali007/Bowing-Web-Application",
   },
   {
     name: "Essential Apartment Parking",
-    technology: "Javascript,ReactJs ,Redux",
-    Author: "Nazir Ali Siddiqui",
+    technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Designed and executed a multi-story commercial real estateproject catering to diverse businesses on a rental basis",
+      "Designed a multi-story commercial real estate project catering to diverse businesses on a rental basis.",
     url: "https://github.com/nazirali007/Essential-Apartment-Parking",
   },
   {
-    name: "Buy And Sell Web Admin Panel",
-    technology: "Javascript,ReactJs ,Redux",
-    Author: "Nazir Ali Siddiqui",
+    name: "Buy & Sell Admin Panel",
+    technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Discover great deals on pre-owned items and for sellers to connect with a wide audience of potential buyers",
+      "Marketplace platform for pre-owned items connecting sellers with a wide audience of potential buyers.",
     url: "https://github.com/nazirali007/Buy-And-Sell-Web-Admin-Panel",
   },
   {
-    name: "Social Media",
-    technology: "Javascript,ReactJs ,Redux",
-    Author: "Nazir Ali Siddiqui",
+    name: "Social Media Application",
+    technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Our personal social media application offers a private, secure, and user-friendly space to connect with close friends and family .",
+      "A private, secure social media app to connect with close friends and family with real-time messaging.",
     url: "https://github.com/nazirali007/Social-Media-Web-Application",
   },
 ];
 
-export default function CardSection() {
-  //   const navigate = useNavigate();
-  const router = useRouter();
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
 
-  const handleCardClick = (url: string) => {
-    // navigate(url);
-    router.push(url);
-  };
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
+export default function CardSection() {
   return (
-    <Box>
-      <Grid container spacing={2}>
-        {projects.map((item, index) => (
-          <Grid item key={index} xs={12} sm={6} md={6}>
-            <Card
-              sx={{
-                minWidth: {
-                  xs: "100%",
-                  sm: 250,
-                  cursor: "pointer",
-                },
-                maxWidth: 500,
-                borderRadius: "0.6rem",
-                position: "relative",
-                overflow: "hidden",
-                backgroundImage:
-                  "url(https://v2-statics.s3.ap-south-1.amazonaws.com/banners/homeBanner/github-new-image.webp)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                color: "white",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                opacity: 0.8,
-                height: {
-                  xs: "auto",
-                  sm: "100%",
-                },
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&::before": {
-                  content: "''",
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 75%, rgba(0,0,0,0.85) 100%)",
-                  zIndex: 0,
-                },
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-                },
-              }}
-              onClick={() => handleCardClick(item?.url)}
-            >
-              <CardContent
-                sx={{
-                  position: "relative",
-                  zIndex: 1,
-                  backgroundColor: "rgba(0, 0, 0, 0.35)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  borderRadius: "0.5rem",
-                  m: 2,
-                  px: 2.5,
-                  py: 2,
-                  backdropFilter: "blur(1.5px)",
-                }}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+    >
+      {projects.map((project, index) => (
+        <motion.a
+          key={index}
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          variants={cardVariants}
+          whileHover={{ y: -8 }}
+          className="project-card group cursor-pointer flex flex-col"
+        >
+          {/* Card top accent */}
+          <div className="h-1 bg-gradient-to-r from-[#64d2de] via-[#a78bfa] to-[#f472b6]" />
+
+          <div className="p-4 sm:p-6 flex flex-col flex-1">
+            {/* Folder icon */}
+            <div className="flex items-center justify-between mb-4">
+              <svg
+                className="w-10 h-10 text-[#64d2de]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <Typography sx={{ fontSize: "1rem", fontWeight: 600 }} gutterBottom>
-                  {item?.name}
-                </Typography>
-                <Typography sx={{ opacity: 0.9 }}>{item?.Author}</Typography>
-                <Typography variant="body2" sx={{ my: 1.5, color: "#f0f0f0" }}>
-                  {item?.technology}
-                </Typography>
-                <Typography variant="body2" component="div" sx={{ color: "#e8e8e8" }}>
-                  {item?.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                />
+              </svg>
+              <svg
+                className="w-5 h-5 text-[#a0a0b0] group-hover:text-[#64d2de] transition-colors -rotate-45"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2 group-hover:text-[#64d2de] transition-colors">
+              {project.name}
+            </h3>
+
+            <p className="text-sm text-[#a0a0b0] mb-4 flex-1 leading-relaxed">
+              {project.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {project.technology.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-xs text-[#64d2de]/80 font-mono"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.a>
+      ))}
+    </motion.div>
   );
 }

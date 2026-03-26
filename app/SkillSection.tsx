@@ -1,54 +1,122 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Fab } from "@mui/material";
 
-const fabLabels = [
-  "Javascript",
-  "ReactJs",
-  "Redux",
-  "HTML5",
-  "CSS3",
-  "Tailwind",
-  "RestfulApi",
-  "NEXT Js",
-  "Web Socket",
-  "CI/CD",
-  "Material UI",
-  "Bootstrap",
-  "Communication",
-  "Responsive Web Design",
+import React from "react";
+import { motion } from "framer-motion";
+
+const skillCategories = [
+  {
+    title: "Frontend",
+    skills: [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "HTML5",
+      "CSS3",
+    ],
+  },
+  {
+    title: "UI & Styling",
+    skills: [
+      "Tailwind CSS",
+      "Material UI",
+      "shadcn/UI",
+      "Responsive Design",
+      "Mobile First UI",
+      "Design Systems",
+    ],
+  },
+  {
+    title: "State & Data",
+    skills: [
+      "Redux",
+      "Context API",
+      "React Query",
+      "REST APIs",
+      "Axios",
+      "JWT Auth",
+    ],
+  },
+  {
+    title: "Forms & Validation",
+    skills: [
+      "React Hook Form",
+      "Zod",
+      "Controlled Forms",
+    ],
+  },
+  {
+    title: "Tools & Other",
+    skills: [
+      "Git & GitHub",
+      "Vercel",
+      "Webpack",
+      "SSR / SSG",
+      "CI/CD",
+      "SEO",
+      "Performance Optimization",
+    ],
+  },
 ];
 
-export default function AnimatedFabs() {
-  const [animated, setAnimated] = useState(Array(fabLabels.length).fill(false));
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
 
-  useEffect(() => {
-    const timers = fabLabels.map((_, index) =>
-      setTimeout(() => {
-        setAnimated((prev) => {
-          const newAnimated = [...prev];
-          newAnimated[index] = true;
-          return newAnimated;
-        });
-      }, index * 800)
-    );
+const categoryVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
 
-    return () => timers.forEach((timer) => clearTimeout(timer));
-  }, []);
+const pillVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.3 },
+  },
+};
 
+export default function SkillSection() {
   return (
-    <div>
-      {fabLabels.map((label, index) => (
-        <Fab
-          key={label}
-          variant="extended"
-          size="medium"
-          className={animated[index] ? "fab-animate" : ""}
-          sx={{ margin: "10px", backgroundColor: "#64d2de" }}
-        >
-          {label}
-        </Fab>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      className="flex flex-col gap-8"
+    >
+      {skillCategories.map((category) => (
+        <motion.div key={category.title} variants={categoryVariants}>
+          <h3 className="text-sm uppercase tracking-widest text-[#a0a0b0] mb-3 font-medium">
+            {category.title}
+          </h3>
+          <motion.div
+            className="flex flex-wrap gap-3"
+            variants={containerVariants}
+          >
+            {category.skills.map((skill) => (
+              <motion.span
+                key={skill}
+                variants={pillVariants}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="skill-pill"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </motion.div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
