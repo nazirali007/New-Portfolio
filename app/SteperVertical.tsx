@@ -67,7 +67,7 @@ export default function SteperVertical() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      className="relative pl-7 sm:pl-10"
+      className="relative pl-6 sm:pl-10"
     >
       {/* Timeline line */}
       <div className="timeline-line" />
@@ -76,19 +76,19 @@ export default function SteperVertical() {
         <motion.div
           key={`${exp.company}-${exp.type}`}
           variants={itemVariants}
-          className="relative mb-12 last:mb-0"
+          className="relative mb-8 sm:mb-12 last:mb-0"
         >
           {/* Timeline dot */}
           <div
             className="timeline-dot absolute"
-            style={{ left: "-1.65rem", top: "0.35rem" }}
+            style={{ left: "-1.45rem", top: "0.35rem" }}
           />
 
           {/* Content card */}
-          <div className="glass rounded-lg sm:rounded-xl p-4 sm:p-6 hover:border-[#64d2de]/20 transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+          <div className="glass rounded-lg sm:rounded-xl p-3 sm:p-6 hover:border-[#64d2de]/20 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2 sm:mb-3">
               <div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">
+                <h3 className="text-sm sm:text-lg font-semibold text-white">
                   {exp.role}
                 </h3>
                 <p className="text-[#64d2de] font-medium text-sm">
@@ -110,7 +110,7 @@ export default function SteperVertical() {
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.1 * i }}
                   viewport={{ once: true }}
-                  className="text-xs sm:text-sm text-[#c0c0d0] flex items-start gap-2"
+                  className="text-[11px] sm:text-sm text-[#c0c0d0] flex items-start gap-1.5 sm:gap-2 leading-relaxed"
                 >
                   <span className="text-[#64d2de] mt-1 shrink-0">▹</span>
                   {item}

@@ -104,11 +104,11 @@ export default function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
         {/* Background gradient orbs */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#64d2de]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#a78bfa]/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 -left-16 sm:-left-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#64d2de]/10 rounded-full blur-[80px] sm:blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-16 sm:-right-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#a78bfa]/10 rounded-full blur-[80px] sm:blur-[120px]" />
 
         <div className="section-container relative z-10">
-          <div className="flex flex-col-reverse lg:flex-row items-center gap-8 sm:gap-12 lg:gap-16">
+          <div className="flex flex-col-reverse lg:flex-row items-center gap-6 sm:gap-12 lg:gap-16">
             {/* Left content */}
             <div className="flex-1 text-center lg:text-left">
               <motion.p
@@ -126,7 +126,7 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight"
+                className="text-2xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight"
               >
                 Nazir Ali Siddiqui
               </motion.h1>
@@ -136,7 +136,7 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 min-h-[2rem] sm:min-h-[2.5rem]"
+                className="text-lg sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 min-h-[1.75rem] sm:min-h-[2.5rem]"
               >
                 <span className="gradient-text typing-cursor">
                   {typedRole}
@@ -148,7 +148,7 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-[#a0a0b0] max-w-lg text-sm sm:text-base lg:text-lg leading-relaxed mx-auto lg:mx-0 mb-6 sm:mb-8 px-2 sm:px-0"
+                className="text-[#a0a0b0] max-w-lg text-xs sm:text-base lg:text-lg leading-relaxed mx-auto lg:mx-0 mb-5 sm:mb-8 px-1 sm:px-0"
               >
                 Results-driven Frontend Developer with 3+ years of experience
                 crafting modern, scalable web applications using React.js,
@@ -166,13 +166,13 @@ export default function Home() {
               >
                 <a
                   href="#projects"
-                  className="px-6 sm:px-8 py-3 rounded-full font-semibold text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
+                  className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
                 >
                   View My Work
                 </a>
                 <a
                   href="#contact"
-                  className="px-6 sm:px-8 py-3 rounded-full font-semibold text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
+                  className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
                 >
                   Get In Touch
                 </a>
@@ -303,7 +303,7 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#a78bfa]/5 rounded-full blur-[150px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-[#a78bfa]/5 rounded-full blur-[100px] sm:blur-[150px]" />
         <div className="section-container relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -344,24 +344,24 @@ export default function Home() {
             <p className="text-[#64d2de] font-mono text-sm mb-3">
               What&apos;s Next?
             </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-5">
               Get In Touch
             </h2>
-            <p className="text-[#a0a0b0] max-w-lg mx-auto mb-8 leading-relaxed text-sm sm:text-base px-4 sm:px-0">
+            <p className="text-[#a0a0b0] max-w-lg mx-auto mb-6 sm:mb-8 leading-relaxed text-xs sm:text-base px-2 sm:px-0">
               I&apos;m currently open to new opportunities. Whether you have a
               question or just want to say hi, feel free to reach out and
               I&apos;ll get back to you!
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2 sm:px-0">
               <a
                 href="mailto:itsnazirali1010@gmail.com"
-                className="w-full sm:w-auto px-8 py-3 rounded-full font-semibold text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
               >
                 Say Hello
               </a>
               <a
                 href="tel:+917007297120"
-                className="w-full sm:w-auto px-8 py-3 rounded-full font-semibold text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
               >
                 +91 7007297120
               </a>

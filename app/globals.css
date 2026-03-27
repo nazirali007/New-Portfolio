@@ -144,13 +144,26 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .section-container {
+    padding: 2.5rem 0.875rem;
+  }
+}
+
 /* Section heading */
 .section-heading {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   position: relative;
   display: inline-block;
+}
+
+@media (min-width: 480px) {
+  .section-heading {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -220,6 +233,12 @@ body {
   border-color: rgba(100, 210, 222, 0.3);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(100, 210, 222, 0.08);
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    border-radius: 0.75rem;
+  }
 }
 
 /* Timeline */
@@ -343,5 +362,29 @@ body {
   .section-container {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+}
+
+/* Small mobile devices (< 380px) */
+@media (max-width: 380px) {
+  .section-container {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+
+  .skill-pill {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .section-heading {
+    font-size: 1.35rem;
+  }
+}
+
+/* Improve tap targets on mobile */
+@media (max-width: 768px) {
+  a, button {
+    -webkit-tap-highlight-color: transparent;
   }
 }

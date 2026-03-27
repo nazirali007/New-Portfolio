@@ -72,7 +72,7 @@ export default function CardSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
     >
       {projects.map((project, index) => (
         <motion.a
@@ -87,11 +87,11 @@ export default function CardSection() {
           {/* Card top accent */}
           <div className="h-1 bg-gradient-to-r from-[#64d2de] via-[#a78bfa] to-[#f472b6]" />
 
-          <div className="p-4 sm:p-6 flex flex-col flex-1">
+          <div className="p-3.5 sm:p-6 flex flex-col flex-1">
             {/* Folder icon */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
               <svg
-                className="w-10 h-10 text-[#64d2de]"
+                className="w-8 h-8 sm:w-10 sm:h-10 text-[#64d2de]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -118,11 +118,11 @@ export default function CardSection() {
               </svg>
             </div>
 
-            <h3 className="text-base sm:text-lg font-semibold text-white mb-2 group-hover:text-[#64d2de] transition-colors">
+            <h3 className="text-sm sm:text-lg font-semibold text-white mb-1.5 sm:mb-2 group-hover:text-[#64d2de] transition-colors">
               {project.name}
             </h3>
 
-            <p className="text-sm text-[#a0a0b0] mb-4 flex-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#a0a0b0] mb-3 sm:mb-4 flex-1 leading-relaxed">
               {project.description}
             </p>
 

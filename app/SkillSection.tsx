@@ -93,15 +93,15 @@ export default function SkillSection() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-6 sm:gap-8"
     >
       {skillCategories.map((category) => (
         <motion.div key={category.title} variants={categoryVariants}>
-          <h3 className="text-sm uppercase tracking-widest text-[#a0a0b0] mb-3 font-medium">
+          <h3 className="text-xs sm:text-sm uppercase tracking-widest text-[#a0a0b0] mb-2 sm:mb-3 font-medium">
             {category.title}
           </h3>
           <motion.div
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap gap-2 sm:gap-3"
             variants={containerVariants}
           >
             {category.skills.map((skill) => (

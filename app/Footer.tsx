@@ -46,13 +46,13 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer className="border-t border-white/5">
-      <div className="max-w-[1200px] mx-auto px-6 py-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm text-[#a0a0b0]"
+            className="text-xs sm:text-sm text-[#a0a0b0] text-center sm:text-left"
           >
             Designed & Built by{" "}
             <span className="text-[#64d2de] font-medium">
