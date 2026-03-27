@@ -133,6 +133,7 @@ body {
 
 /* Section styling */
 .section-container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 5rem 1.5rem;
@@ -140,13 +141,13 @@ body {
 
 @media (max-width: 768px) {
   .section-container {
-    padding: 3rem 1rem;
+    padding: 3rem 0;
   }
 }
 
 @media (max-width: 480px) {
   .section-container {
-    padding: 2.5rem 0.875rem;
+    padding: 2.5rem 0;
   }
 }
 
@@ -357,21 +358,17 @@ body {
   }
 }
 
-/* Prevent horizontal overflow on mobile */
+/* On mobile, root wrapper provides 16px (px-4) horizontal padding,
+   so section-container uses minimal inner padding to avoid doubling */
 @media (max-width: 640px) {
   .section-container {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 /* Small mobile devices (< 380px) */
 @media (max-width: 380px) {
-  .section-container {
-    padding-left: 0.625rem;
-    padding-right: 0.625rem;
-  }
-
   .skill-pill {
     padding: 0.3rem 0.7rem;
     font-size: 0.7rem;

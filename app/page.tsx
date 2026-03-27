@@ -38,7 +38,7 @@ function useTypingEffect(texts: string[], typingSpeed = 80, pauseTime = 2000) {
           }
         }
       },
-      isDeleting ? typingSpeed / 2 : typingSpeed
+      isDeleting ? typingSpeed / 2 : typingSpeed,
     );
 
     return () => clearTimeout(timeout);
@@ -94,7 +94,7 @@ export default function Home() {
   const typedRole = useTypingEffect(roles);
 
   return (
-    <div className="relative">
+    <div className="relative px-4 sm:px-0">
       <FloatingParticles />
       <TopNavbar />
 
@@ -107,18 +107,18 @@ export default function Home() {
         <div className="absolute top-1/4 -left-16 sm:-left-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#64d2de]/10 rounded-full blur-[80px] sm:blur-[120px]" />
         <div className="absolute bottom-1/4 -right-16 sm:-right-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#a78bfa]/10 rounded-full blur-[80px] sm:blur-[120px]" />
 
-        <div className="section-container relative z-10">
-          <div className="flex flex-col-reverse lg:flex-row items-center gap-6 sm:gap-12 lg:gap-16">
+        <div className="section-container relative z-10 w-full mx-auto">
+          <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-6 sm:gap-12 lg:gap-16">
             {/* Left content */}
-            <div className="flex-1 text-center lg:text-left">
+            <div className="flex-1 w-full text-center lg:text-left">
               <motion.p
                 custom={0}
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-[#64d2de] font-mono text-sm mb-3 tracking-wider"
+                className="text-[#64d2de] font-mono text-sm md:text-base mb-3 tracking-wider"
               >
-                Hi, my name is
+                Hi, I&apos;m
               </motion.p>
 
               <motion.h1
@@ -138,9 +138,7 @@ export default function Home() {
                 animate="visible"
                 className="text-lg sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 min-h-[1.75rem] sm:min-h-[2.5rem]"
               >
-                <span className="gradient-text typing-cursor">
-                  {typedRole}
-                </span>
+                <span className="gradient-text typing-cursor">{typedRole}</span>
               </motion.div>
 
               <motion.p
@@ -162,7 +160,7 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row items-center sm:items-stretch gap-3 sm:gap-4 justify-center lg:justify-start"
               >
                 <a
                   href="#projects"
@@ -288,7 +286,7 @@ export default function Home() {
 
       {/* Experience Section */}
       <section id="experience" className="relative">
-        <div className="section-container">
+        <div className="section-container mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +302,7 @@ export default function Home() {
       {/* Skills Section */}
       <section id="skills" className="relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-[#a78bfa]/5 rounded-full blur-[100px] sm:blur-[150px]" />
-        <div className="section-container relative z-10">
+        <div className="section-container relative z-10 mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -319,7 +317,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="relative">
-        <div className="section-container">
+        <div className="section-container mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -334,7 +332,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="relative">
-        <div className="section-container text-center">
+        <div className="section-container text-center mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
