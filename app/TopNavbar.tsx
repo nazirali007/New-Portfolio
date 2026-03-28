@@ -132,7 +132,7 @@ const TopNavbar = () => {
                   </a>
                 ))}
                 <a
-                  href="/Nazir-Ali-NEW.pdf"
+                  href="/Nazir_Resume.pdf"
                   download="Nazir_Ali_Siddiqui_Resume.pdf"
                   className="mt-3 mx-3 py-3 rounded-full text-sm font-semibold text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] active:scale-95 transition-transform"
                 >
