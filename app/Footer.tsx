@@ -45,30 +45,45 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-white/5">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <motion.p
+    <footer className="relative border-t border-white/5 mt-10">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-10 sm:py-14">
+        {/* Oversized signature */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-10 sm:mb-14"
+        >
+          <p className="eyebrow mb-3">◆ Thanks for scrolling</p>
+          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl text-white leading-none">
+            Let&apos;s <em className="italic text-[#64d2de]">talk.</em>
+          </h2>
+        </motion.div>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 pt-8 border-t border-white/5">
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-xs sm:text-sm text-[#a0a0b0] text-center sm:text-left"
+            className="text-xs font-mono text-[#6b6b7b] space-y-1"
           >
-            Designed & Built by{" "}
-            <span className="text-[#64d2de] font-medium">
-              Nazir Ali Siddiqui
-            </span>
-          </motion.p>
+            <p className="uppercase tracking-widest">
+              © 2026 — Nazir Ali Siddiqui
+            </p>
+            <p className="text-[#6b6b7b]/70">
+              Designed & built with Next.js, Framer Motion & a lot of coffee.
+            </p>
+          </motion.div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {socialLinks.map((link) => (
               <motion.a
                 key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3, color: "#64d2de" }}
-                className="text-[#a0a0b0] hover:text-[#64d2de] transition-colors"
+                whileHover={{ y: -3 }}
+                className="text-[#9a9aab] hover:text-[#64d2de] transition-colors"
                 aria-label={link.label}
               >
                 {link.icon}

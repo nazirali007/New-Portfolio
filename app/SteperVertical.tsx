@@ -46,17 +46,15 @@ const experiences = [
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.3 },
-  },
+  visible: { transition: { staggerChildren: 0.25 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -30 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" as const },
   },
 };
 
@@ -66,57 +64,63 @@ export default function SteperVertical() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      className="relative pl-6 sm:pl-10"
+      viewport={{ once: true, margin: "-80px" }}
+      className="relative pl-8 sm:pl-12"
     >
-      {/* Timeline line */}
       <div className="timeline-line" />
 
       {experiences.map((exp, index) => (
         <motion.div
           key={`${exp.company}-${exp.type}`}
           variants={itemVariants}
-          className="relative mb-8 sm:mb-12 last:mb-0"
+          className="relative mb-14 sm:mb-20 last:mb-0 group"
         >
-          {/* Timeline dot */}
           <div
             className="timeline-dot absolute"
-            style={{ left: "-1.45rem", top: "0.35rem" }}
+            style={{ left: "-1.85rem", top: "0.75rem" }}
           />
 
-          {/* Content card */}
-          <div className="glass rounded-lg sm:rounded-xl p-3 sm:p-6 hover:border-[#64d2de]/20 transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2 sm:mb-3">
-              <div>
-                <h3 className="text-sm sm:text-lg font-semibold text-white">
-                  {exp.role}
-                </h3>
-                <p className="text-[#64d2de] font-medium text-sm">
-                  {exp.company}
-                  <span className="text-[#a0a0b0] ml-2">· {exp.type}</span>
-                </p>
-              </div>
-              <div className="text-sm text-[#a0a0b0]">
-                <p>{exp.duration}</p>
-                <p>{exp.location}</p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-10">
+            {/* Date column */}
+            <div className="md:text-right md:pt-1">
+              <p className="text-xs font-mono text-[#6b6b7b] tracking-widest uppercase">
+                {exp.duration}
+              </p>
+              <p className="text-xs font-mono text-[#6b6b7b]/70 mt-1">
+                {exp.location}
+              </p>
             </div>
 
-            <ul className="space-y-2">
-              {exp.highlights.map((item, i) => (
-                <motion.li
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * i }}
-                  viewport={{ once: true }}
-                  className="text-[11px] sm:text-sm text-[#c0c0d0] flex items-start gap-1.5 sm:gap-2 leading-relaxed"
-                >
-                  <span className="text-[#64d2de] mt-1 shrink-0">▹</span>
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
+            {/* Content */}
+            <div className="relative">
+              <span className="text-xs font-mono text-[#64d2de]/60 mb-1 block">
+                0{index + 1} — {exp.type}
+              </span>
+              <h3 className="font-display text-2xl sm:text-4xl text-white leading-[1.1] mb-1">
+                {exp.role}
+              </h3>
+              <p className="font-display italic text-lg sm:text-2xl text-[#64d2de] mb-5">
+                @ {exp.company}
+              </p>
+
+              <ul className="space-y-2.5 max-w-2xl">
+                {exp.highlights.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08 * i }}
+                    viewport={{ once: true }}
+                    className="text-xs sm:text-sm text-[#9a9aab] flex items-start gap-3 leading-relaxed"
+                  >
+                    <span className="text-[#64d2de] mt-1.5 shrink-0 text-[8px]">
+                      ●
+                    </span>
+                    <span>{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
           </div>
         </motion.div>
       ))}

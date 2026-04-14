@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "#home", num: "01" },
+  { label: "Experience", href: "#experience", num: "02" },
+  { label: "Skills", href: "#skills", num: "03" },
+  { label: "Projects", href: "#projects", num: "04" },
+  { label: "Contact", href: "#contact", num: "05" },
 ];
 
 const TopNavbar = () => {
@@ -30,40 +30,49 @@ const TopNavbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled || mobileOpen
-          ? "bg-[#0a0a0f]/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/5"
+          ? "bg-[#07070c]/80 backdrop-blur-xl border-b border-white/5"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center h-14 sm:h-16">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <a
             href="#home"
-            className="text-lg sm:text-xl font-bold gradient-text shrink-0"
+            className="shrink-0 flex items-center gap-2 group"
             onClick={() => setMobileOpen(false)}
           >
-            &lt;Nazir /&gt;
+            <span className="w-8 h-8 rounded-full border border-[#64d2de]/40 flex items-center justify-center font-display italic text-[#64d2de] text-sm group-hover:bg-[#64d2de]/10 transition-colors">
+              N
+            </span>
+            <span className="font-display italic text-lg text-white hidden sm:inline">
+              Nazir <span className="text-[#6b6b7b]">Siddiqui</span>
+            </span>
           </a>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link text-sm font-medium"
+                className="nav-link flex items-baseline gap-1.5 font-medium"
               >
+                <span className="text-[10px] font-mono text-[#64d2de]/60">
+                  {link.num}
+                </span>
                 {link.label}
               </a>
             ))}
             <a
               href="/Nazir_Resume.pdf"
               download="Nazir_Ali_Siddiqui_Resume.pdf"
-              className="px-5 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/20 transition-shadow"
+              className="btn-primary !py-2.5 !px-5 !text-xs"
             >
-              Resume
+              <span>Resume</span>
+              <span>↓</span>
             </a>
           </div>
 
@@ -120,14 +129,17 @@ const TopNavbar = () => {
               transition={{ duration: 0.2 }}
               className="absolute top-full left-0 right-0 bg-[#0a0a0f] border-b border-white/10 md:hidden overflow-hidden"
             >
-              <div className="flex flex-col px-4 py-4">
+              <div className="flex flex-col px-5 py-5">
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
-                    className="text-[#c0c0d0] hover:text-[#64d2de] active:text-[#64d2de] text-base font-medium py-3 px-3 rounded-lg active:bg-white/5 transition-colors"
+                    className="flex items-baseline gap-3 text-[#c0c0d0] hover:text-[#64d2de] active:text-[#64d2de] font-display italic text-2xl py-3 border-b border-white/5 last:border-b-0 transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
+                    <span className="text-[10px] font-mono not-italic text-[#64d2de]/60">
+                      {link.num}
+                    </span>
                     {link.label}
                   </a>
                 ))}

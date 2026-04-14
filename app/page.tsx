@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import TopNavbar from "./TopNavbar";
 import SteperVertical from "./SteperVertical";
 import SkillSection from "./SkillSection";
@@ -15,6 +15,21 @@ const roles = [
   "TypeScript Enthusiast",
 ];
 
+const marqueeItems = [
+  "React.js",
+  "Next.js",
+  "TypeScript",
+  "Tailwind",
+  "shadcn/UI",
+  "Framer Motion",
+  "Redux",
+  "React Query",
+  "Node.js",
+  "REST APIs",
+  "SSR / SSG",
+  "Performance",
+];
+
 function useTypingEffect(texts: string[], typingSpeed = 80, pauseTime = 2000) {
   const [displayText, setDisplayText] = useState("");
   const [textIndex, setTextIndex] = useState(0);
@@ -22,7 +37,6 @@ function useTypingEffect(texts: string[], typingSpeed = 80, pauseTime = 2000) {
 
   useEffect(() => {
     const currentText = texts[textIndex];
-
     const timeout = setTimeout(
       () => {
         if (!isDeleting) {
@@ -40,7 +54,6 @@ function useTypingEffect(texts: string[], typingSpeed = 80, pauseTime = 2000) {
       },
       isDeleting ? typingSpeed / 2 : typingSpeed,
     );
-
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, textIndex, texts, typingSpeed, pauseTime]);
 
@@ -49,19 +62,16 @@ function useTypingEffect(texts: string[], typingSpeed = 80, pauseTime = 2000) {
 
 function FloatingParticles() {
   const [count, setCount] = useState(15);
-
   useEffect(() => {
-    setCount(window.innerWidth >= 640 ? 30 : 12);
+    setCount(window.innerWidth >= 640 ? 24 : 10);
   }, []);
-
   const particles = Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${Math.random() * 100}%`,
-    duration: 8 + Math.random() * 12,
-    delay: Math.random() * 10,
+    duration: 10 + Math.random() * 14,
+    delay: Math.random() * 12,
     size: 1 + Math.random() * 2,
   }));
-
   return (
     <div className="particles-bg">
       {particles.map((p) => (
@@ -81,44 +91,96 @@ function FloatingParticles() {
   );
 }
 
+function TechMarquee() {
+  const items = [...marqueeItems, ...marqueeItems];
+  return (
+    <div className="marquee py-6 sm:py-10 border-y border-white/5">
+      <div className="marquee-track">
+        {items.map((item, i) => (
+          <span key={i} className="marquee-item">
+            <span className="dot" />
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: "easeOut" as const },
+    transition: { delay: i * 0.12, duration: 0.7, ease: "easeOut" as const },
   }),
 };
 
 export default function Home() {
   const typedRole = useTypingEffect(roles);
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll();
+  const progressX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    heroRef.current?.style.setProperty("--mx", `${x}%`);
+    heroRef.current?.style.setProperty("--my", `${y}%`);
+  };
 
   return (
-    <div className="relative px-4 sm:px-0">
+    <div className="relative">
+      <motion.div className="scroll-progress" style={{ scaleX: progressX }} />
       <FloatingParticles />
       <TopNavbar />
 
-      {/* Hero Section */}
+      {/* ============ HERO ============ */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        ref={heroRef}
+        onMouseMove={handleMouseMove}
+        className="relative min-h-screen flex items-center overflow-hidden"
       >
-        {/* Background gradient orbs */}
-        <div className="absolute top-1/4 -left-16 sm:-left-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#64d2de]/10 rounded-full blur-[80px] sm:blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-16 sm:-right-32 w-48 h-48 sm:w-96 sm:h-96 bg-[#a78bfa]/10 rounded-full blur-[80px] sm:blur-[120px]" />
+        <div className="aurora" />
+        <div className="spotlight" />
 
-        <div className="section-container relative z-10 w-full mx-auto">
-          <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-6 sm:gap-12 lg:gap-16">
+        <div className="section-container relative z-10 w-full">
+          {/* Top meta row */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex items-center justify-between mb-10 sm:mb-16 text-xs font-mono text-[#6b6b7b]"
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="tracking-widest uppercase">
+                Available for work
+              </span>
+            </div>
+            <div className="hidden sm:block tracking-widest uppercase">
+              Gurgaon, India — 3+ yrs
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 lg:gap-20 items-center">
             {/* Left content */}
-            <div className="flex-1 w-full text-center lg:text-left">
+            <div className="order-2 lg:order-1">
               <motion.p
                 custom={0}
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-[#64d2de] font-mono text-sm md:text-base mb-3 tracking-wider"
+                className="eyebrow mb-5 sm:mb-7"
               >
-                Hi, I&apos;m
+                ◆ Portfolio — 2026
               </motion.p>
 
               <motion.h1
@@ -126,9 +188,11 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-2xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 leading-tight"
+                className="display-hero mb-4 sm:mb-6"
               >
-                Nazir Ali Siddiqui
+                Nazir
+                <br />
+                Ali <em>Siddiqui</em>
               </motion.h1>
 
               <motion.div
@@ -136,9 +200,12 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-lg sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 min-h-[1.75rem] sm:min-h-[2.5rem]"
+                className="flex items-center gap-3 mb-6 sm:mb-8"
               >
-                <span className="gradient-text typing-cursor">{typedRole}</span>
+                <div className="h-px w-10 bg-[#64d2de]" />
+                <span className="text-base sm:text-xl font-display italic text-[#a0a0b0] typing-cursor">
+                  {typedRole}
+                </span>
               </motion.div>
 
               <motion.p
@@ -146,53 +213,52 @@ export default function Home() {
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="text-[#a0a0b0] max-w-lg text-xs sm:text-base lg:text-lg leading-relaxed mx-auto lg:mx-0 mb-5 sm:mb-8 px-1 sm:px-0"
+                className="text-[#9a9aab] max-w-xl text-sm sm:text-base leading-relaxed mb-8 sm:mb-10"
               >
-                Results-driven Frontend Developer with 3+ years of experience
-                crafting modern, scalable web applications using React.js,
-                Next.js, and TypeScript. Passionate about building pixel-perfect
-                UIs and delivering exceptional user experiences.
+                A senior frontend developer crafting{" "}
+                <span className="text-white font-display italic">
+                  pixel-perfect
+                </span>
+                , performant interfaces with React, Next.js and TypeScript —
+                obsessed with the quiet details that make a product feel
+                premium.
               </motion.p>
 
-              {/* CTA Buttons */}
               <motion.div
                 custom={4}
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="flex flex-col sm:flex-row items-center sm:items-stretch gap-3 sm:gap-4 justify-center lg:justify-start"
+                className="flex flex-wrap items-center gap-3 sm:gap-4"
               >
-                <a
-                  href="#projects"
-                  className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
-                >
-                  View My Work
+                <a href="#projects" className="btn-primary">
+                  <span>View selected work</span>
+                  <span>↓</span>
                 </a>
-                <a
-                  href="#contact"
-                  className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
-                >
-                  Get In Touch
+                <a href="#contact" className="btn-ghost">
+                  <span>Get in touch</span>
+                  <span>→</span>
                 </a>
               </motion.div>
 
-              {/* Social links */}
               <motion.div
                 custom={5}
                 variants={fadeInUp}
                 initial="hidden"
                 animate="visible"
-                className="flex gap-5 mt-8 justify-center lg:justify-start"
+                className="flex items-center gap-6 mt-10 sm:mt-14"
               >
+                <span className="eyebrow !text-[#6b6b7b]">Follow</span>
+                <div className="h-px flex-1 max-w-[40px] bg-white/10" />
                 <a
                   href="https://github.com/nazirali007"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#a0a0b0] hover:text-[#64d2de] transition-colors hover:-translate-y-1 transform duration-200"
+                  className="text-[#9a9aab] hover:text-[#64d2de] transition-colors"
                   aria-label="GitHub"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -203,11 +269,11 @@ export default function Home() {
                   href="https://www.linkedin.com/in/nazir-ali-siddiqui-385a3a174"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#a0a0b0] hover:text-[#64d2de] transition-colors hover:-translate-y-1 transform duration-200"
+                  className="text-[#9a9aab] hover:text-[#64d2de] transition-colors"
                   aria-label="LinkedIn"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -216,11 +282,11 @@ export default function Home() {
                 </a>
                 <a
                   href="mailto:itsnazirali1010@gmail.com"
-                  className="text-[#a0a0b0] hover:text-[#64d2de] transition-colors hover:-translate-y-1 transform duration-200"
+                  className="text-[#9a9aab] hover:text-[#64d2de] transition-colors"
                   aria-label="Email"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -236,132 +302,151 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right - Profile Image */}
+            {/* Right — profile frame */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex-shrink-0"
+              initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.9, delay: 0.4 }}
+              className="order-1 lg:order-2 flex-shrink-0 self-center mx-auto lg:mx-0"
             >
-              <div className="profile-glow">
+              <div className="profile-frame">
                 <img
                   src="images/ProfilePicture.png"
                   alt="Nazir Ali Siddiqui"
-                  className="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover"
+                  className="w-52 h-60 sm:w-64 sm:h-72 md:w-72 md:h-80 lg:w-[320px] lg:h-[400px] object-cover"
                 />
+              </div>
+              <div className="mt-4 flex items-center justify-between text-[10px] sm:text-xs font-mono text-[#6b6b7b] px-1">
+                <span>— NAS / 001</span>
+                <span>©2026</span>
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
-          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-[#6b6b7b] z-10"
         >
+          <span className="text-[10px] font-mono tracking-[0.3em] uppercase">
+            Scroll
+          </span>
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-[#a0a0b0]"
-          >
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </motion.div>
+            className="w-px h-10 bg-gradient-to-b from-[#64d2de] to-transparent"
+          />
         </motion.div>
       </section>
 
-      {/* Experience Section */}
+      {/* ============ MARQUEE ============ */}
+      <TechMarquee />
+
+      {/* ============ EXPERIENCE ============ */}
       <section id="experience" className="relative">
-        <div className="section-container mx-auto">
-          <motion.h2
+        <div className="section-container">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="section-heading"
+            className="section-heading flex items-end justify-between flex-wrap gap-4"
           >
-            Experience
-          </motion.h2>
+            <div>
+              <p className="eyebrow mb-3">◆ 01 / Career</p>
+              <h2 className="display-section">
+                Where I&apos;ve <em>built</em>
+              </h2>
+            </div>
+            <p className="text-sm text-[#6b6b7b] font-mono max-w-xs hidden md:block">
+              Three years shipping production frontends across travel,
+              marketplace and real-estate products.
+            </p>
+          </motion.div>
           <SteperVertical />
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* ============ SKILLS ============ */}
       <section id="skills" className="relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-[#a78bfa]/5 rounded-full blur-[100px] sm:blur-[150px]" />
-        <div className="section-container relative z-10 mx-auto">
-          <motion.h2
+        <div className="aurora opacity-60" />
+        <div className="section-container relative z-10">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="section-heading"
+            className="section-heading flex items-end justify-between flex-wrap gap-4"
           >
-            Skills & Technologies
-          </motion.h2>
+            <div>
+              <p className="eyebrow mb-3">◆ 02 / Toolkit</p>
+              <h2 className="display-section">
+                Tools of the <em>craft</em>
+              </h2>
+            </div>
+            <p className="text-sm text-[#6b6b7b] font-mono max-w-xs hidden md:block">
+              A curated stack refined across 3+ years and dozens of shipped
+              features.
+            </p>
+          </motion.div>
           <SkillSection />
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* ============ PROJECTS ============ */}
       <section id="projects" className="relative">
-        <div className="section-container mx-auto">
-          <motion.h2
+        <div className="section-container">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="section-heading"
+            className="section-heading flex items-end justify-between flex-wrap gap-4"
           >
-            Featured Projects
-          </motion.h2>
+            <div>
+              <p className="eyebrow mb-3">◆ 03 / Selected Work</p>
+              <h2 className="display-section">
+                Recent <em>projects</em>
+              </h2>
+            </div>
+            <p className="text-sm text-[#6b6b7b] font-mono max-w-xs hidden md:block">
+              A sample of client and personal builds. Click through to code.
+            </p>
+          </motion.div>
           <CardSection />
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="relative">
-        <div className="section-container text-center mx-auto">
+      {/* ============ CONTACT ============ */}
+      <section id="contact" className="relative overflow-hidden">
+        <div className="aurora opacity-70" />
+        <div className="section-container relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
           >
-            <p className="text-[#64d2de] font-mono text-sm mb-3">
-              What&apos;s Next?
-            </p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-5">
-              Get In Touch
+            <p className="eyebrow mb-5">◆ 04 / Contact</p>
+            <h2 className="display-section mb-6 sm:mb-8">
+              Let&apos;s build something <em>remarkable</em>
             </h2>
-            <p className="text-[#a0a0b0] max-w-lg mx-auto mb-6 sm:mb-8 leading-relaxed text-xs sm:text-base px-2 sm:px-0">
-              I&apos;m currently open to new opportunities. Whether you have a
-              question or just want to say hi, feel free to reach out and
-              I&apos;ll get back to you!
+            <p className="text-[#9a9aab] max-w-xl mx-auto mb-10 leading-relaxed text-sm sm:text-base">
+              I&apos;m currently open to new opportunities. Whether it&apos;s a
+              full-time role, contract work, or just a friendly hello — my inbox
+              is always open.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2 sm:px-0">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="mailto:itsnazirali1010@gmail.com"
-                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] hover:shadow-lg hover:shadow-[#64d2de]/25 transition-all hover:-translate-y-0.5 active:scale-95"
+                href="https://wa.me/917007297120?text=Hi%20Nazir%2C%20I%20came%20across%20your%20portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
               >
-                Say Hello
+                <span>Say hello</span>
+                <span>→</span>
               </a>
-              <a
-                href="tel:+917007297120"
-                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-xs sm:text-sm text-center border border-[#64d2de]/30 text-[#64d2de] hover:bg-[#64d2de]/10 transition-all hover:-translate-y-0.5 active:scale-95"
-              >
-                +91 7007297120
+              <a href="tel:+917007297120" className="btn-ghost">
+                <span>+91 7007297120</span>
               </a>
             </div>
           </motion.div>

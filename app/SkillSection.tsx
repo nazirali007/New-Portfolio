@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 const skillCategories = [
   {
+    num: "01",
     title: "Frontend",
     skills: [
       "React.js",
@@ -16,6 +17,7 @@ const skillCategories = [
     ],
   },
   {
+    num: "02",
     title: "UI & Styling",
     skills: [
       "Tailwind CSS",
@@ -27,6 +29,7 @@ const skillCategories = [
     ],
   },
   {
+    num: "03",
     title: "State & Data",
     skills: [
       "Redux",
@@ -38,14 +41,12 @@ const skillCategories = [
     ],
   },
   {
+    num: "04",
     title: "Forms & Validation",
-    skills: [
-      "React Hook Form",
-      "Zod",
-      "Controlled Forms",
-    ],
+    skills: ["React Hook Form", "Zod", "Controlled Forms"],
   },
   {
+    num: "05",
     title: "Tools & Other",
     skills: [
       "Git & GitHub",
@@ -61,11 +62,7 @@ const skillCategories = [
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 
 const categoryVariants = {
@@ -73,17 +70,13 @@ const categoryVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
+    transition: { duration: 0.6, ease: "easeOut" as const },
   },
 };
 
 const pillVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.3 },
-  },
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.35 } },
 };
 
 export default function SkillSection() {
@@ -92,24 +85,33 @@ export default function SkillSection() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      className="flex flex-col gap-6 sm:gap-8"
+      viewport={{ once: true, margin: "-60px" }}
+      className="flex flex-col gap-10 sm:gap-14"
     >
       {skillCategories.map((category) => (
-        <motion.div key={category.title} variants={categoryVariants}>
-          <h3 className="text-xs sm:text-sm uppercase tracking-widest text-[#a0a0b0] mb-2 sm:mb-3 font-medium">
-            {category.title}
-          </h3>
+        <motion.div
+          key={category.title}
+          variants={categoryVariants}
+          className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12 items-start border-t border-white/5 pt-8 sm:pt-10"
+        >
+          <div>
+            <p className="text-xs font-mono text-[#64d2de]/60 mb-2">
+              {category.num}
+            </p>
+            <h3 className="font-display italic text-2xl sm:text-3xl text-white">
+              {category.title}
+            </h3>
+          </div>
           <motion.div
-            className="flex flex-wrap gap-2 sm:gap-3"
+            className="flex flex-wrap gap-2.5 sm:gap-3"
             variants={containerVariants}
           >
             {category.skills.map((skill) => (
               <motion.span
                 key={skill}
                 variants={pillVariants}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className="skill-pill"
+                whileHover={{ y: -2 }}
+                className="skill-chip"
               >
                 {skill}
               </motion.span>

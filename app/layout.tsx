@@ -1,12 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
+  display: "swap",
+});
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,6 +30,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Nazir Ali Siddiqui" }],
   creator: "Nazir Ali Siddiqui",
+  icons: {
+    icon: [{ url: "/fabicon.svg", type: "image/svg+xml" }],
+    shortcut: "/fabicon.svg",
+    apple: "/fabicon.svg",
+  },
   openGraph: {
     title: "Nazir Ali Siddiqui | Frontend Developer",
     description:
@@ -54,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${poppins.variable} font-sans antialiased`}
+        className={`${inter.variable} ${fraunces.variable} font-sans antialiased`}
       >
         {children}
       </body>
