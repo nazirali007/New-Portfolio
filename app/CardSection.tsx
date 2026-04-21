@@ -1,187 +1,200 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 
-const projects = [
+type Project = {
+  name: string;
+  year: string;
+  technology: string[];
+  description: string;
+  url: string;
+  tag?: string;
+};
+
+const projects: Project[] = [
   {
-    name: "Url Shortener Web Application",
+    name: "WaterMark Remover",
+    year: "2026",
+    technology: ["Next.js", "React", "TypeScript"],
+    description:
+      "A web application that removes watermarks from images with a clean, intuitive interface and fast processing.",
+    url: "https://github.com/nazirali007/WaterMark-Remover",
+    tag: "Latest",
+  },
+  {
+    name: "Url Shortener",
+    year: "2024",
     technology: ["Next.js", "Redux", "JavaScript"],
     description:
-      "A web application that allows users to shorten long URLs into concise, shareable links with analytics tracking.",
+      "Shorten long URLs into concise, shareable links with analytics tracking.",
     url: "https://github.com/nazirali007/url-shortner",
   },
   {
     name: "Dating App Admin Panel",
+    year: "2024",
     technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Built a web application for an adult dating platform facilitating client-provider matchmaking with admin controls.",
+      "Admin panel for a dating platform facilitating client-provider matchmaking.",
     url: "https://github.com/nazirali007/Roses-Web-Panel",
   },
   {
     name: "Bowling Web Application",
+    year: "2023",
     technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Developed a bowling game website featuring live scoring for multiple leagues and teams with real-time updates.",
+      "Bowling website featuring live scoring for multiple leagues and teams in real-time.",
     url: "https://github.com/nazirali007/Bowing-Web-Application",
   },
   {
     name: "Essential Apartment Parking",
+    year: "2023",
     technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Designed a multi-story commercial real estate project catering to diverse businesses on a rental basis.",
+      "Multi-story commercial real-estate platform serving diverse businesses on a rental basis.",
     url: "https://github.com/nazirali007/Essential-Apartment-Parking",
   },
   {
     name: "Buy & Sell Admin Panel",
+    year: "2023",
     technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "Marketplace platform for pre-owned items connecting sellers with a wide audience of potential buyers.",
+      "Marketplace platform for pre-owned items connecting sellers with potential buyers.",
     url: "https://github.com/nazirali007/Buy-And-Sell-Web-Admin-Panel",
   },
   {
     name: "Social Media Application",
+    year: "2023",
     technology: ["React.js", "Redux", "JavaScript"],
     description:
-      "A private, secure social media app to connect with close friends and family with real-time messaging.",
+      "A private, secure social app to connect with close friends and family in real-time.",
     url: "https://github.com/nazirali007/Social-Media-Web-Application",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
+const ArrowIcon = () => (
+  <svg
+    className="w-4 h-4 text-[var(--ink-subtle)] group-hover:text-[var(--accent)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all shrink-0"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M7 17L17 7M7 7h10v10"
+    />
+  </svg>
+);
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: "easeOut" as const },
+    transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
 
-type Project = (typeof projects)[number];
-
-function TiltCard({ project, index }: { project: Project; index: number }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
-    const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
-    x.set(mouseX);
-    y.set(mouseY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.a
-      ref={ref}
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      variants={cardVariants}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className="project-card group cursor-pointer flex flex-col"
-    >
-      <div className="project-visual" style={{ transform: "translateZ(20px)" }}>
-        <span className="project-index">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <svg
-            className="w-16 h-16 sm:w-20 sm:h-20 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth={1}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-            />
-          </svg>
-        </div>
-      </div>
-
-      <div
-        className="p-5 sm:p-7 flex flex-col flex-1"
-        style={{ transform: "translateZ(30px)" }}
-      >
-        <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
-          <h3 className="font-display text-xl sm:text-2xl text-white leading-tight group-hover:text-[#64d2de] transition-colors">
-            {project.name}
-          </h3>
-          <svg
-            className="w-5 h-5 text-[#6b6b7b] group-hover:text-[#64d2de] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all shrink-0 mt-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M7 17L17 7M7 7h10v10"
-            />
-          </svg>
-        </div>
-
-        <p className="text-xs sm:text-sm text-[#9a9aab] mb-5 flex-1 leading-relaxed">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
-          {project.technology.map((tech) => (
-            <span
-              key={tech}
-              className="text-[10px] sm:text-xs font-mono text-[#64d2de]/80 uppercase tracking-wider"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.a>
-  );
-}
-
 export default function CardSection() {
+  const [featured, ...rest] = projects;
+
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-      style={{ perspective: "1200px" }}
-    >
-      {projects.map((project, index) => (
-        <TiltCard key={index} project={project} index={index} />
-      ))}
-    </motion.div>
+    <div>
+      {/* Featured project */}
+      <motion.a
+        href={featured.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        className="project-featured group block"
+        aria-label={`View ${featured.name} on GitHub`}
+      >
+        <div className="project-visual">
+          <span className="visual-tag">{featured.tag ?? "Featured"}</span>
+          <span className="visual-number" aria-hidden="true">
+            01
+          </span>
+        </div>
+        <div className="project-featured-body">
+          <div>
+            <p className="font-mono text-[11px] text-[var(--ink-subtle)] uppercase tracking-widest mb-3">
+              {featured.year} — Featured
+            </p>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <h3 className="font-display text-2xl sm:text-3xl text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors leading-tight">
+                {featured.name}
+              </h3>
+              <ArrowIcon />
+            </div>
+            <p className="text-sm text-[var(--ink-muted)] leading-relaxed">
+              {featured.description}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {featured.technology.map((tech) => (
+              <span key={tech} className="chip">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.a>
+
+      {/* Rest of projects */}
+      <motion.ul
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.06 } },
+        }}
+        className="project-grid"
+        aria-label="Other projects"
+      >
+        {rest.map((project, i) => (
+          <motion.li key={project.url} variants={fadeUp}>
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-tile group"
+              aria-label={`View ${project.name} on GitHub`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <span className="font-mono text-[11px] text-[var(--ink-subtle)]">
+                  {String(i + 2).padStart(2, "0")} — {project.year}
+                </span>
+                <ArrowIcon />
+              </div>
+              <div>
+                <h3 className="font-display text-lg sm:text-xl text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors leading-tight mb-2">
+                  {project.name}
+                </h3>
+                <p className="text-sm text-[var(--ink-muted)] leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-auto pt-2">
+                {project.technology.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-[10px] font-mono text-[var(--ink-subtle)] uppercase tracking-wider"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </a>
+          </motion.li>
+        ))}
+      </motion.ul>
+    </div>
   );
 }

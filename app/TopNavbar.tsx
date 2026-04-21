@@ -2,22 +2,26 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { label: "Home", href: "#home", num: "01" },
-  { label: "Experience", href: "#experience", num: "02" },
-  { label: "Skills", href: "#skills", num: "03" },
-  { label: "Projects", href: "#projects", num: "04" },
-  { label: "Contact", href: "#contact", num: "05" },
+  { label: "About", href: "#about", num: "00" },
+  { label: "Experience", href: "#experience", num: "01" },
+  { label: "Skills", href: "#skills", num: "02" },
+  { label: "Projects", href: "#projects", num: "03" },
+  { label: "Contact", href: "#contact", num: "04" },
 ];
+
+const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
 
 const TopNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState<string>("home");
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -28,39 +32,52 @@ const TopNavbar = () => {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled || mobileOpen
-          ? "bg-[#07070c]/80 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
-      }`}
+      aria-label="Primary"
+      className={`nav-root ${scrolled || mobileOpen ? "scrolled" : ""}`}
     >
-      <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          {/* Logo */}
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-7">
+        <div className="flex justify-between items-center h-16">
           <a
             href="#home"
-            className="shrink-0 flex items-center gap-2 group"
+            className="text-sm font-medium text-[var(--ink)] tracking-tight flex items-center gap-2"
             onClick={() => setMobileOpen(false)}
+            aria-label="Home"
           >
-            <span className="w-8 h-8 rounded-full border border-[#64d2de]/40 flex items-center justify-center font-display italic text-[#64d2de] text-sm group-hover:bg-[#64d2de]/10 transition-colors">
-              N
-            </span>
-            <span className="font-display italic text-lg text-white hidden sm:inline">
-              Nazir <span className="text-[#6b6b7b]">Siddiqui</span>
-            </span>
+            <span
+              className="w-2 h-2 rounded-full bg-[var(--accent)]"
+              aria-hidden="true"
+            />
+            Nazir<span className="text-[var(--ink-subtle)]">.dev</span>
           </a>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link flex items-baseline gap-1.5 font-medium"
+                className="nav-link flex items-baseline gap-1.5"
+                data-active={active === link.href.replace("#", "")}
               >
-                <span className="text-[10px] font-mono text-[#64d2de]/60">
+                <span className="text-[10px] font-mono text-[var(--ink-subtle)]">
                   {link.num}
                 </span>
                 {link.label}
@@ -69,25 +86,28 @@ const TopNavbar = () => {
             <a
               href="/Nazir_Resume.pdf"
               download="Nazir_Ali_Siddiqui_Resume.pdf"
-              className="btn-primary !py-2.5 !px-5 !text-xs"
+              className="text-sm text-[var(--ink)] border border-[var(--line-strong)] hover:border-[var(--ink)] transition-colors px-3.5 py-1.5 rounded-full"
             >
-              <span>Resume</span>
-              <span>↓</span>
+              Resume ↓
             </a>
+            <ThemeToggle />
           </div>
 
-          {/* Mobile hamburger */}
+          <div className="md:hidden flex items-center gap-1">
+            <ThemeToggle />
           <button
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg active:bg-white/10"
+            className="flex items-center justify-center w-10 h-10 -mr-2"
             onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
           >
             <svg
-              className="w-6 h-6 text-white"
+              className="w-5 h-5 text-[var(--ink)]"
               fill="none"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.5}
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               {mobileOpen ? (
                 <path
@@ -99,45 +119,42 @@ const TopNavbar = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h12"
+                  d="M4 8h16M4 16h16"
                 />
               )}
             </svg>
           </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu - inside nav for proper stacking */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-14 bg-black/50 md:hidden"
+              className="fixed inset-0 top-16 bg-[var(--ink)]/20 md:hidden"
               onClick={() => setMobileOpen(false)}
             />
-
-            {/* Menu */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 bg-[#0a0a0f] border-b border-white/10 md:hidden overflow-hidden"
+              className="absolute top-full left-0 right-0 bg-[var(--paper)] border-b border-[var(--line)] md:hidden"
             >
-              <div className="flex flex-col px-5 py-5">
+              <div className="flex flex-col px-5 py-4">
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
-                    className="flex items-baseline gap-3 text-[#c0c0d0] hover:text-[#64d2de] active:text-[#64d2de] font-display italic text-2xl py-3 border-b border-white/5 last:border-b-0 transition-colors"
+                    className="flex items-baseline gap-3 text-[var(--ink-2)] hover:text-[var(--ink)] py-3 text-base border-b border-[var(--line)] last:border-b-0 transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
-                    <span className="text-[10px] font-mono not-italic text-[#64d2de]/60">
+                    <span className="text-[10px] font-mono text-[var(--ink-subtle)]">
                       {link.num}
                     </span>
                     {link.label}
@@ -146,7 +163,8 @@ const TopNavbar = () => {
                 <a
                   href="/Nazir_Resume.pdf"
                   download="Nazir_Ali_Siddiqui_Resume.pdf"
-                  className="mt-3 mx-3 py-3 rounded-full text-sm font-semibold text-center bg-gradient-to-r from-[#64d2de] to-[#a78bfa] text-[#0a0a0f] active:scale-95 transition-transform"
+                  className="mt-4 py-2.5 rounded-full text-sm text-center bg-[var(--ink)] text-[var(--paper)]"
+                  onClick={() => setMobileOpen(false)}
                 >
                   Download Resume
                 </a>

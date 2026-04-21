@@ -7,6 +7,8 @@ const skillCategories = [
   {
     num: "01",
     title: "Frontend",
+    size: "wide" as const,
+    blurb: "My core — I live in React trees, component APIs and render cycles.",
     skills: [
       "React.js",
       "Next.js",
@@ -19,18 +21,21 @@ const skillCategories = [
   {
     num: "02",
     title: "UI & Styling",
+    size: "narrow" as const,
+    blurb: "Design systems, tokens, motion.",
     skills: [
       "Tailwind CSS",
       "Material UI",
       "shadcn/UI",
-      "Responsive Design",
-      "Mobile First UI",
+      "Responsive",
       "Design Systems",
     ],
   },
   {
     num: "03",
     title: "State & Data",
+    size: "half" as const,
+    blurb: "Predictable data flow and clean API contracts.",
     skills: [
       "Redux",
       "Context API",
@@ -43,11 +48,15 @@ const skillCategories = [
   {
     num: "04",
     title: "Forms & Validation",
+    size: "half" as const,
+    blurb: "Type-safe, resilient user input.",
     skills: ["React Hook Form", "Zod", "Controlled Forms"],
   },
   {
     num: "05",
-    title: "Tools & Other",
+    title: "Tools & Shipping",
+    size: "full" as const,
+    blurb: "From commit to production with confidence.",
     skills: [
       "Git & GitHub",
       "Vercel",
@@ -55,70 +64,75 @@ const skillCategories = [
       "SSR / SSG",
       "CI/CD",
       "SEO",
-      "Performance Optimization",
+      "Performance",
+      "Accessibility",
     ],
   },
 ];
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
-const categoryVariants = {
-  hidden: { opacity: 0, y: 30 },
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
+    transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
 
-const pillVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.35 } },
-};
-
 export default function SkillSection() {
+  const handleMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--mx", `${mx}%`);
+    el.style.setProperty("--my", `${my}%`);
+  };
+
   return (
-    <motion.div
+    <motion.ul
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-60px" }}
-      className="flex flex-col gap-10 sm:gap-14"
+      className="bento-grid"
+      aria-label="Skills and toolkit"
     >
       {skillCategories.map((category) => (
-        <motion.div
+        <motion.li
           key={category.title}
-          variants={categoryVariants}
-          className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 md:gap-12 items-start border-t border-white/5 pt-8 sm:pt-10"
+          variants={itemVariants}
+          className={`bento-tile ${category.size}`}
+          onMouseMove={handleMove}
         >
           <div>
-            <p className="text-xs font-mono text-[#64d2de]/60 mb-2">
-              {category.num}
+            <div className="flex items-baseline gap-3 mb-3">
+              <span className="font-mono text-[11px] text-[var(--ink-subtle)]">
+                {category.num}
+              </span>
+              <h3 className="font-display text-xl sm:text-2xl text-[var(--ink)]">
+                {category.title}
+              </h3>
+            </div>
+            <p className="text-sm text-[var(--ink-muted)] leading-relaxed max-w-md">
+              {category.blurb}
             </p>
-            <h3 className="font-display italic text-2xl sm:text-3xl text-white">
-              {category.title}
-            </h3>
           </div>
-          <motion.div
-            className="flex flex-wrap gap-2.5 sm:gap-3"
-            variants={containerVariants}
-          >
+
+          <ul className="flex flex-wrap gap-2 mt-6">
             {category.skills.map((skill) => (
-              <motion.span
-                key={skill}
-                variants={pillVariants}
-                whileHover={{ y: -2 }}
-                className="skill-chip"
-              >
+              <li key={skill} className="chip">
                 {skill}
-              </motion.span>
+              </li>
             ))}
-          </motion.div>
-        </motion.div>
+          </ul>
+        </motion.li>
       ))}
-    </motion.div>
+    </motion.ul>
   );
 }
