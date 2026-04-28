@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import AskNazirChat from "./AskNazirChat";
+import InitialPageLoader from "./InitialPageLoader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -215,8 +217,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} font-sans antialiased`}
       >
-        <a href="#main" className="skip-link">Skip to content</a>
-        {children}
+        <InitialPageLoader>
+          <a href="#main" className="skip-link">Skip to content</a>
+          {children}
+          <AskNazirChat />
+        </InitialPageLoader>
       </body>
     </html>
   );

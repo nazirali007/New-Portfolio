@@ -7,6 +7,7 @@ import SteperVertical from "./SteperVertical";
 import SkillSection from "./SkillSection";
 import CardSection from "./CardSection";
 import Footer from "./Footer";
+import { SkeletonBlock } from "./SkeletonLoader";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -31,6 +32,16 @@ const marqueeWords = [
 ];
 
 export default function Home() {
+  const [profileReady, setProfileReady] = React.useState(false);
+  const profileImageRef = React.useRef<HTMLImageElement>(null);
+
+  React.useEffect(() => {
+    const image = profileImageRef.current;
+    if (image?.complete && image.naturalWidth > 0) {
+      setProfileReady(true);
+    }
+  }, []);
+
   return (
     <>
       <TopNavbar />
@@ -121,13 +132,21 @@ export default function Home() {
                 <figure className="profile-card w-56 sm:w-64 lg:w-[300px]">
                   <span className="tape" aria-hidden="true" />
                   <div className="photo">
+                    {!profileReady && (
+                      <SkeletonBlock className="profile-image-skeleton" />
+                    )}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="images/ProfilePicture.png"
+                      ref={profileImageRef}
+                      src="/images/ProfilePicture.png"
                       alt="Portrait of Nazir Ali Siddiqui, Frontend Developer"
                       width={600}
                       height={750}
                       loading="eager"
+                      decoding="async"
+                      onLoad={() => setProfileReady(true)}
+                      onError={() => setProfileReady(true)}
+                      className={profileReady ? "is-loaded" : ""}
                     />
                   </div>
                   <figcaption className="profile-meta">
