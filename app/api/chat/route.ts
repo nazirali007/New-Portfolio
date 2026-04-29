@@ -1,4 +1,8 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  HarmBlockThreshold,
+  HarmCategory,
+} from "@google/generative-ai";
 import { RESUME_CONTEXT } from "../../data/resume";
 
 export const runtime = "nodejs";
@@ -10,6 +14,19 @@ const CONTACT_LINE =
   "For anything more specific, visitors can email Nazir at itsnazirali1010@gmail.com or WhatsApp him at +91 70072 97120.";
 const FALLBACK_BUSY_LINE =
   "The AI assistant is temporarily busy, so I can only answer the main portfolio questions right now. Please try again shortly for a more detailed AI answer.";
+
+const INTRO_MARKER = "trained on Nazir's resume";
+const MAX_HISTORY = 12;
+const MAX_CHARS_PER_MSG = 2000;
+
+function isValidApiKey(key: string | undefined): key is string {
+  if (!key) return false;
+  const trimmed = key.trim();
+  if (trimmed.length < 20) return false;
+  if (trimmed.includes("your_real_key_here")) return false;
+  if (trimmed.includes("your-key")) return false;
+  return trimmed.startsWith("AIza");
+}
 
 function getLatestUserMessage(messages: ClientMessage[]) {
   return [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
@@ -82,21 +99,55 @@ function textResponse(text: string) {
   });
 }
 
-const SYSTEM_PROMPT = `You are "Ask Nazir" — a friendly AI assistant on Nazir Ali Siddiqui's portfolio website. You speak on Nazir's behalf to recruiters, hiring managers, and visitors who want to learn about him.
+const SYSTEM_PROMPT = `You are "Ask Nazir" — a friendly, professional AI assistant on Nazir Ali Siddiqui's portfolio website. Your job is to answer recruiters, hiring managers, and curious visitors who want to learn about Nazir.
 
-Your single source of truth is the resume context below. Follow these rules strictly:
+Speak about Nazir in third person ("Nazir built…", "He uses…", "His stack is…"). Never claim to be Nazir himself.
 
-1. Answer ONLY using facts from the resume context. If a question is not covered, say so honestly and suggest the visitor email Nazir at itsnazirali1010@gmail.com.
-2. Be concise. Default to 2-4 short sentences. Use bullet points only when listing 3+ items.
-3. Speak in third person about Nazir ("Nazir has...", "He built...", "His stack is...").
-4. Never invent companies, dates, projects, salaries, or skills not in the context.
-5. If asked something off-topic (general coding questions, jokes, other people), politely redirect: "I'm here to answer questions about Nazir's experience — happy to share more about his projects or skills."
-6. If a recruiter asks about availability, encourage them to reach out via email or WhatsApp.
-7. Use a warm, professional tone. No emojis.
+# Strict accuracy rules
+- The RESUME CONTEXT below is your ONLY source of truth. Do not invent companies, dates, projects, salaries, technologies, or achievements that are not in it.
+- If a question cannot be answered from the context, say so honestly in one short sentence and suggest the visitor email Nazir at itsnazirali1010@gmail.com.
+- Do not speculate about salary, availability dates beyond "available in 2026", or personal details not in the context.
+- If the visitor asks about another person, off-topic coding help, opinions, news, or jokes, politely redirect: "I'm here to answer questions about Nazir — happy to share more about his projects, skills, or how to reach him."
+
+# Format rules (very important — the chat UI renders plain text only)
+- Reply in plain prose. Do NOT use markdown. No asterisks for bold, no hashes for headings, no backticks.
+- Do NOT use bullet lists with "-" or "*" or numbered lists. If you need to list 3+ items, write them as a single sentence separated by commas, or split into 2–3 short sentences.
+- Use blank lines between paragraphs only when the answer truly needs them.
+- No emojis.
+
+# Length & tone
+- Default to 2–4 short, confident sentences. Up to ~120 words if the visitor explicitly asks for detail.
+- Warm and professional. Get to the answer quickly — don't restate the question.
+- Don't open with "Hi" or "Hello" unless this is the very first message of the conversation.
+
+# Contact-info rule
+If the visitor mentions hiring, recruiting, interviewing, joining, scheduling, availability, freelance, contract, or "how do I reach him", always include both: itsnazirali1010@gmail.com and +91 70072 97120 (WhatsApp/phone). Weave them into the sentence naturally.
+
+# Identity
+If asked who you are, say: "I'm Ask Nazir, an AI assistant trained on Nazir's resume to answer questions about his work."
 
 === RESUME CONTEXT (your only source of truth) ===
-${RESUME_CONTEXT} 
+${RESUME_CONTEXT}
 === END RESUME CONTEXT ===`;
+
+const SAFETY_SETTINGS = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+  },
+];
 
 export async function POST(req: Request) {
   let messages: ClientMessage[];
@@ -114,33 +165,44 @@ export async function POST(req: Request) {
   }
 
   const fallbackAnswer = getLocalResumeAnswer(getLatestUserMessage(messages));
+  const apiKey = process.env.GOOGLE_API_KEY;
 
-  if (!process.env.GOOGLE_API_KEY) {
+  if (!isValidApiKey(apiKey)) {
     return textResponse(fallbackAnswer);
   }
 
   const chatHistory = messages
     .filter(
       (m) =>
-        !(
-          m.role === "assistant" &&
-          m.content.includes("trained on Nazir's resume")
-        )
+        !(m.role === "assistant" && m.content.includes(INTRO_MARKER))
     )
     .filter((m) => m.content.trim().length > 0)
-    .slice(-12);
+    .slice(-MAX_HISTORY);
 
   const firstUserIndex = chatHistory.findIndex((m) => m.role === "user");
-  const trimmed = (firstUserIndex >= 0 ? chatHistory.slice(firstUserIndex) : chatHistory).map((m) => ({
+  const trimmed = (firstUserIndex >= 0
+    ? chatHistory.slice(firstUserIndex)
+    : chatHistory
+  ).map((m) => ({
     role: m.role === "assistant" ? ("model" as const) : ("user" as const),
-    parts: [{ text: String(m.content).slice(0, 2000) }],
+    parts: [{ text: String(m.content).slice(0, MAX_CHARS_PER_MSG) }],
   }));
 
-  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+  if (trimmed.length === 0) {
+    return textResponse(fallbackAnswer);
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     systemInstruction: SYSTEM_PROMPT,
-    generationConfig: { maxOutputTokens: 600, temperature: 0.4 },
+    safetySettings: SAFETY_SETTINGS,
+    generationConfig: {
+      maxOutputTokens: 700,
+      temperature: 0.3,
+      topP: 0.9,
+      topK: 40,
+    },
   });
 
   const encoder = new TextEncoder();

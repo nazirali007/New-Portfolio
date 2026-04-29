@@ -275,12 +275,49 @@ html.dark .skeleton-block {
   background: var(--paper-raised);
 }
 
-.skeleton-card-stack {
-  display: grid;
-  gap: 1rem;
+.skeleton-marquee {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.25rem 1.75rem;
+  border-block: 1px solid var(--line);
+  background: var(--paper-raised);
+  overflow: hidden;
 }
 
-.skeleton-content-card {
+.skeleton-timeline {
+  position: relative;
+  display: grid;
+  gap: 2.25rem;
+  padding-left: 1.75rem;
+  list-style: none;
+}
+.skeleton-timeline::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.skeleton-timeline-item {
+  position: relative;
+}
+
+.skeleton-timeline-dot {
+  position: absolute;
+  left: -1.75rem;
+  top: 0.75rem;
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--line-strong);
+}
+
+.skeleton-timeline-card {
   padding: 1.6rem;
   border: 1px solid var(--line);
   border-radius: 14px;
