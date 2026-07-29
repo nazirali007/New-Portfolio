@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import PageSkeleton from "./SkeletonLoader";
+import PageSkeleton from "@/components/ui/SkeletonLoader";
 
 const EXIT_DURATION = 260;
 const MIN_VISIBLE_TIME = 380;

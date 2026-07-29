@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, RefObject } from "react";
+import { hasFinePointer, prefersReducedMotion } from "@/utils/media";
 
 const HOVER_SELECTOR =
   'a, button, input, textarea, [role="button"], [data-cursor-hover]';
 
-export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-
+/** Drives a lagging dot+ring cursor from a real mouse, skipped on touch/reduced-motion. */
+export function useCustomCursor(
+  dotRef: RefObject<HTMLDivElement>,
+  ringRef: RefObject<HTMLDivElement>
+) {
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!hasFinePointer() || prefersReducedMotion()) return;
 
     document.body.classList.add("has-custom-cursor");
 
@@ -64,12 +64,5 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(rafId);
     };
-  }, []);
-
-  return (
-    <>
-      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
-    </>
-  );
+  }, [dotRef, ringRef]);
 }

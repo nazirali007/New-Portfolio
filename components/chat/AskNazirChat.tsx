@@ -2,8 +2,8 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SUGGESTED_QUESTIONS } from "./data/resume";
-import { ChatMessageSkeleton } from "./SkeletonLoader";
+import { SUGGESTED_QUESTIONS } from "@/data/resume";
+import { ChatMessageSkeleton } from "@/components/ui/SkeletonLoader";
 
 type Message = {
   id: string;

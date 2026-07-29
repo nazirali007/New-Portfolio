@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import AskNazirChat from "./AskNazirChat";
-import InitialPageLoader from "./InitialPageLoader";
-import CustomCursor from "./CustomCursor";
-import ScrollProgress from "./ScrollProgress";
+import AskNazirChat from "@/components/chat/AskNazirChat";
+import InitialPageLoader from "@/components/layout/InitialPageLoader";
+import CustomCursor from "@/components/ui/CustomCursor";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -141,10 +141,6 @@ const personJsonLd = {
   description: SITE_DESC,
   email: "mailto:itsnazirali1010@gmail.com",
   telephone: "+91-7007297120",
-  worksFor: {
-    "@type": "Organization",
-    name: "CaptureATrip",
-  },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Gurgaon",

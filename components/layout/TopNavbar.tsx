@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about", num: "00" },

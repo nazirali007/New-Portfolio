@@ -19,11 +19,11 @@ const experiences: Experience[] = [
   {
     company: "CaptureATrip",
     role: "Frontend Developer",
-    duration: "Feb 2025 — Present",
+    duration: "Feb 2025 — May 2026",
     dateTime: "2025-02",
     location: "Gurgaon, India",
     type: "Full-time",
-    current: true,
+    current: false,
     highlights: [
       "Engineered a modern travel platform with Next.js App Router & Server Components",
       "Built scalable UIs with shadcn/UI, Tailwind CSS, and reusable component architecture",

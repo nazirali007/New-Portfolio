@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-export default function ScrollProgress() {
-  const barRef = useRef<HTMLDivElement>(null);
+/** Scales a ref'd element's x-axis to match how far the page has been scrolled. */
+export function useScrollProgress<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
-    const bar = barRef.current;
+    const bar = ref.current;
     if (!bar) return;
 
     const update = () => {
@@ -26,5 +27,5 @@ export default function ScrollProgress() {
     };
   }, []);
 
-  return <div ref={barRef} className="scroll-progress" aria-hidden="true" />;
+  return ref;
 }
