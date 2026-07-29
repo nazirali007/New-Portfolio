@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-fraunces)", "serif"],
+        display: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
       colors: {

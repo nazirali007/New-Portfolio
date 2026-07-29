@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import AskNazirChat from "./AskNazirChat";
 import InitialPageLoader from "./InitialPageLoader";
+import CustomCursor from "./CustomCursor";
+import ScrollProgress from "./ScrollProgress";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,17 +13,9 @@ const inter = Inter({
   weight: ["300", "400", "500", "600"],
 });
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
   variable: "--font-jetbrains",
   display: "swap",
 });
@@ -72,11 +66,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/fabicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
     ],
-    shortcut: "/fabicon.svg",
-    apple: "/fabicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   openGraph: {
     type: "website",
@@ -128,8 +122,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4efe6" },
-    { media: "(prefers-color-scheme: dark)", color: "#14110d" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f3ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0a" },
   ],
   colorScheme: "light dark",
 };
@@ -215,8 +209,10 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} font-sans antialiased`}
+        className={`${inter.variable} ${jetbrains.variable} font-sans antialiased`}
       >
+        <ScrollProgress />
+        <CustomCursor />
         <InitialPageLoader>
           <a href="#main" className="skip-link">Skip to content</a>
           {children}

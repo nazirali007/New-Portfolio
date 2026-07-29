@@ -14,13 +14,21 @@ type Project = {
 
 const projects: Project[] = [
   {
+    name: "Maintenance Reminder",
+    year: "2026",
+    technology: ["Next.js", "Prisma", "PostgreSQL", "Auth.js"],
+    description:
+      "Tracks every vehicle's service history and predicts when maintenance is due from your driving pattern — not just when you happen to open the app. A daily background job estimates today's odometer reading from past updates and emails you before something's overdue.",
+    url: "https://github.com/nazirali007/maintenance_Reminder",
+    tag: "Latest",
+  },
+  {
     name: "WaterMark Remover",
     year: "2026",
     technology: ["Next.js", "React", "TypeScript"],
     description:
       "A web application that removes watermarks from images with a clean, intuitive interface and fast processing.",
     url: "https://github.com/nazirali007/WaterMark-Remover",
-    tag: "Latest",
   },
   {
     name: "Url Shortener",

@@ -25,12 +25,12 @@ const Footer = () => {
           className="flex flex-col sm:flex-row gap-8 sm:gap-0 justify-between items-start sm:items-end"
         >
           <div>
-            <p className="font-display text-2xl sm:text-3xl text-[var(--ink)] mb-2 flex items-center gap-2">
+            <p className="font-display font-bold uppercase text-2xl sm:text-3xl text-[var(--ink)] mb-2 flex items-center gap-2">
               <span
-                className="w-2 h-2 rounded-full bg-[var(--accent)]"
+                className="w-2 h-2 bg-[var(--accent)]"
                 aria-hidden="true"
               />
-              Nazir<span className="text-[var(--ink-subtle)]">.dev</span>
+              Nazir<span className="text-[var(--accent)]">.dev</span>
             </p>
             <p className="text-xs font-mono text-[var(--ink-subtle)]">
               © 2026 Nazir Ali Siddiqui — Designed &amp; built in Next.js.

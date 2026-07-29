@@ -111,7 +111,7 @@ export default function SteperVertical() {
                 <h3 className="font-display text-xl sm:text-2xl text-[var(--ink)] leading-tight">
                   {exp.role}
                 </h3>
-                <p className="font-display italic text-base sm:text-lg text-[var(--accent)] mt-0.5">
+                <p className="font-display font-bold text-base sm:text-lg text-[var(--accent)] mt-0.5">
                   @ {exp.company}
                 </p>
               </div>

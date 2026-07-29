@@ -58,15 +58,15 @@ const TopNavbar = () => {
         <div className="flex justify-between items-center h-16">
           <a
             href="#home"
-            className="text-sm font-medium text-[var(--ink)] tracking-tight flex items-center gap-2"
+            className="font-mono text-sm font-bold uppercase text-[var(--ink)] tracking-tight flex items-center gap-2"
             onClick={() => setMobileOpen(false)}
             aria-label="Home"
           >
             <span
-              className="w-2 h-2 rounded-full bg-[var(--accent)]"
+              className="w-2 h-2 bg-[var(--accent)]"
               aria-hidden="true"
             />
-            Nazir<span className="text-[var(--ink-subtle)]">.dev</span>
+            Nazir<span className="text-[var(--accent)]">.dev</span>
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -86,7 +86,7 @@ const TopNavbar = () => {
             <a
               href="/Nazir_Resume.pdf"
               download="Nazir_Ali_Siddiqui_Resume.pdf"
-              className="text-sm text-[var(--ink)] border border-[var(--line-strong)] hover:border-[var(--ink)] transition-colors px-3.5 py-1.5 rounded-full"
+              className="font-mono text-xs uppercase tracking-wide text-[var(--ink)] border border-[var(--line-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors px-3.5 py-1.5"
             >
               Resume ↓
             </a>
@@ -163,7 +163,7 @@ const TopNavbar = () => {
                 <a
                   href="/Nazir_Resume.pdf"
                   download="Nazir_Ali_Siddiqui_Resume.pdf"
-                  className="mt-4 py-2.5 rounded-full text-sm text-center bg-[var(--ink)] text-[var(--paper)]"
+                  className="mt-4 py-2.5 font-mono text-xs uppercase tracking-wide text-center bg-[var(--accent)] text-[var(--accent-ink)]"
                   onClick={() => setMobileOpen(false)}
                 >
                   Download Resume

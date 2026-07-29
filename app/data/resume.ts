@@ -60,37 +60,43 @@ Git & GitHub, Vercel, Webpack, SSR / SSG, CI/CD, SEO, Performance optimization, 
 
 ## Selected Projects (with GitHub links)
 
-1. **WaterMark Remover** (2026) — Latest project
+1. **Maintenance Reminder** (2026) — Latest project
+   - Tracks every vehicle's service history and predicts when maintenance is due based on the owner's actual driving pattern, not just when they open the app. Users add vehicles and per-item service rules (e.g. "Engine Oil every 5,000 km" or "Coolant every 40,000 km or 1 year, whichever comes first"). A daily background cron job estimates today's odometer reading from past updates and emails the user if a service is likely overdue — even after weeks of not opening the app.
+   - Features: multi-vehicle tracking with logos/photos, per-item km/date maintenance rules, checklist-style service logging, health score and upcoming-maintenance view, email OTP + Google OAuth + password login, daily estimation/reminder cron job.
+   - Stack: Next.js (App Router, Turbopack), React 19, Prisma, PostgreSQL (Supabase), Auth.js, Resend, Tailwind CSS v4, shadcn/ui, react-hook-form, zod.
+   - Repo: https://github.com/nazirali007/maintenance_Reminder
+
+2. **WaterMark Remover** (2026)
    - A web app that removes watermarks from images with a clean, intuitive interface and fast processing.
    - Stack: Next.js, React, TypeScript.
    - Repo: https://github.com/nazirali007/WaterMark-Remover
 
-2. **URL Shortener** (2024)
+3. **URL Shortener** (2024)
    - Shortens long URLs into concise, shareable links with analytics tracking.
    - Stack: Next.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/url-shortner
 
-3. **Dating App Admin Panel** (2024)
+4. **Dating App Admin Panel** (2024)
    - Admin panel for a dating platform facilitating client-provider matchmaking.
    - Stack: React.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/Roses-Web-Panel
 
-4. **Bowling Web Application** (2023)
+5. **Bowling Web Application** (2023)
    - Bowling website with live scoring for multiple leagues and teams in real time.
    - Stack: React.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/Bowing-Web-Application
 
-5. **Essential Apartment Parking** (2023)
+6. **Essential Apartment Parking** (2023)
    - Multi-story commercial real-estate platform serving diverse businesses on a rental basis.
    - Stack: React.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/Essential-Apartment-Parking
 
-6. **Buy & Sell Admin Panel** (2023)
+7. **Buy & Sell Admin Panel** (2023)
    - Marketplace platform for pre-owned items connecting sellers with potential buyers.
    - Stack: React.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/Buy-And-Sell-Web-Admin-Panel
 
-7. **Social Media Application** (2023)
+8. **Social Media Application** (2023)
    - A private, secure social app to connect with close friends and family in real time.
    - Stack: React.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/Social-Media-Web-Application
