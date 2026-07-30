@@ -604,34 +604,8 @@ html.is-initial-loading body { overflow: hidden; }
   background: var(--paper-raised);
   padding: 1rem 0;
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  white-space: nowrap;
-  animation: marquee 14s linear infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 2.5rem;
-  padding-right: 2.5rem;
-  flex-shrink: 0;
-  font-family: var(--font-jetbrains), monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: clamp(1rem, 2.2vw, 1.5rem);
-  color: var(--ink);
-  letter-spacing: 0.01em;
-}
-.marquee-item .sep { color: var(--accent); }
-
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-25%, 0, 0); }
+.marquee section > div + div {
+  margin-top: 0.35rem;
 }
 
 /* ==================================================================
