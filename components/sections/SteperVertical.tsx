@@ -19,7 +19,7 @@ const experiences: Experience[] = [
   {
     company: "CaptureATrip",
     role: "Frontend Developer",
-    duration: "Feb 2025 — May 2026",
+    duration: "Feb 2025 — Jul 2026",
     dateTime: "2025-02",
     location: "Gurgaon, India",
     type: "Full-time",

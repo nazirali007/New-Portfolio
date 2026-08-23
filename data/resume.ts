@@ -21,7 +21,7 @@ Travel, marketplace, real-estate, social, and admin-panel products.
 
 ## Experience
 
-### Frontend Developer — CaptureATrip (Feb 2025 — May 2026, most recent role)
+### Frontend Developer — CaptureATrip (Feb 2025 — Jul 2026, most recent role)
 - Engineered a modern travel platform using Next.js App Router and Server Components.
 - Built scalable UIs with shadcn/UI, Tailwind CSS, and a reusable component architecture.
 - Implemented OTP login, JWT authentication, and protected routes for secure sessions.

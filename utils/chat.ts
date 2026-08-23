@@ -43,7 +43,7 @@ export function getLocalResumeAnswer(question: string) {
   }
 
   if (/(experience|experiance|exp|year|years|how long)/.test(q)) {
-    return "Nazir has 3+ years of experience shipping production frontends. He most recently worked as a Frontend Developer at CaptureATrip from Feb 2025 to May 2026, and before that at Techdock Labs from Jan 2023 to Feb 2025 after a 6-month frontend internship.";
+    return "Nazir has 3+ years of experience shipping production frontends. He most recently worked as a Frontend Developer at CaptureATrip from Feb 2025 to Jul 2026, and before that at Techdock Labs from Jan 2023 to Feb 2025 after a 6-month frontend internship.";
   }
 
   if (/(contact|email|phone|whatsapp|reach|hire|connect)/.test(q)) {
@@ -55,11 +55,11 @@ export function getLocalResumeAnswer(question: string) {
   }
 
   if (/(professional journey|journey|background|career|profile|who is|summary|intro|introduction)/.test(q)) {
-    return "Nazir is a Frontend Developer based in Gurgaon with 3+ years of production frontend experience. He started with a frontend internship at Techdock Labs in Jul 2022, became a Frontend Developer there from Jan 2023 to Feb 2025, then worked as a Frontend Developer at CaptureATrip from Feb 2025 to May 2026. He's now open to new full-time roles, contract work, and freelance projects.";
+    return "Nazir is a Frontend Developer based in Gurgaon with 3+ years of production frontend experience. He started with a frontend internship at Techdock Labs in Jul 2022, became a Frontend Developer there from Jan 2023 to Feb 2025, then worked as a Frontend Developer at CaptureATrip from Feb 2025 to Jul 2026. He's now open to new full-time roles, contract work, and freelance projects.";
   }
 
   if (/(current|present|now|currently|company|worked|work history|captureatrip|techdock)/.test(q)) {
-    return "Nazir most recently worked as a Frontend Developer at CaptureATrip from Feb 2025 to May 2026. Before that, he was at Techdock Labs as a Frontend Developer from Jan 2023 to Feb 2025, after a frontend internship from Jul 2022 to Dec 2022. He's currently available for new opportunities.";
+    return "Nazir most recently worked as a Frontend Developer at CaptureATrip from Feb 2025 to Jul 2026. Before that, he was at Techdock Labs as a Frontend Developer from Jan 2023 to Feb 2025, after a frontend internship from Jul 2022 to Dec 2022. He's currently available for new opportunities.";
   }
 
   if (/(skill|stack|technology|tech|tools|react|next|typescript|javascript|tailwind|redux)/.test(q)) {
