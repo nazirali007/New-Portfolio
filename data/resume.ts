@@ -65,11 +65,13 @@ Git & GitHub, Vercel, Webpack, SSR / SSG, CI/CD, SEO, Performance optimization, 
    - Features: multi-vehicle tracking with logos/photos, per-item km/date maintenance rules, checklist-style service logging, health score and upcoming-maintenance view, email OTP + Google OAuth + password login, daily estimation/reminder cron job.
    - Stack: Next.js (App Router, Turbopack), React 19, Prisma, PostgreSQL (Supabase), Auth.js, Resend, Tailwind CSS v4, shadcn/ui, react-hook-form, zod.
    - Repo: https://github.com/nazirali007/maintenance_Reminder
+   - Live: https://carsalahkar.site/dashboard
 
 2. **WaterMark Remover** (2026)
    - A web app that removes watermarks from images with a clean, intuitive interface and fast processing.
    - Stack: Next.js, React, TypeScript.
    - Repo: https://github.com/nazirali007/WaterMark-Remover
+   - Live: https://water-mark-remover-pearl.vercel.app/
 
 3. **URL Shortener** (2024)
    - Shortens long URLs into concise, shareable links with analytics tracking.

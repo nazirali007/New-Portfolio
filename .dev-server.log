@@ -1,0 +1,42 @@
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 1543ms (1382 modules)
+ GET / 200 in 1656ms
+ ✓ Compiled in 111ms (677 modules)
+ GET / 200 in 30ms
+ ✓ Compiled /_not-found in 176ms (1371 modules)
+ GET /dashboard 404 in 244ms
+ ✓ Compiled /favicon.ico in 80ms (738 modules)
+ GET /favicon.ico 200 in 106ms
+ ✓ Compiled in 253ms (677 modules)
+ ✓ Compiled /_not-found in 151ms (1307 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 561ms (1534 modules)
+ GET /dashboard 404 in 599ms
+ ✓ Compiled in 83ms (865 modules)
+ GET /dashboard 404 in 47ms
+ ✓ Compiled /favicon.ico in 114ms (715 modules)
+ GET /favicon.ico 200 in 135ms
+ ✓ Compiled in 215ms (865 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/006bbfaa9c47c1e8.webpack.hot-update.json 404 in 33ms
+ GET /dashboard 404 in 38ms
+ ✓ Compiled in 75ms (865 modules)
+ GET /dashboard 404 in 13ms
+ ✓ Compiled in 70ms (865 modules)
+ GET /dashboard 404 in 18ms
+ ✓ Compiled in 95ms (865 modules)
+ GET /dashboard 404 in 16ms
+ ✓ Compiled in 87ms (865 modules)
+ GET /dashboard 404 in 15ms
+ ✓ Compiled in 95ms (1566 modules)
+ ✓ Compiled in 64ms (1566 modules)
+ ✓ Compiled / in 153ms (744 modules)
+ GET / 200 in 242ms
+ ✓ Compiled /_not-found in 111ms (1595 modules)
+ GET /dashboard 404 in 25ms
+[?25h

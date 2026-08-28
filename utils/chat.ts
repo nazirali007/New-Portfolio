@@ -67,7 +67,7 @@ export function getLocalResumeAnswer(question: string) {
   }
 
   if (/(project|work|portfolio|github|recent|latest|built|build)/.test(q)) {
-    return "Nazir's selected projects include Maintenance Reminder, WaterMark Remover, URL Shortener, Dating App Admin Panel, Bowling Web Application, Essential Apartment Parking, Buy & Sell Admin Panel, and Social Media Application. His latest project is Maintenance Reminder, built with Next.js, Prisma, and PostgreSQL.";
+    return "Nazir's selected projects include Maintenance Reminder, WaterMark Remover, URL Shortener, Dating App Admin Panel, Bowling Web Application, Essential Apartment Parking, Buy & Sell Admin Panel, and Social Media Application. He also builds his own products — Maintenance Reminder is live at carsalahkar.site (Next.js, Prisma, PostgreSQL) and WaterMark Remover is live at water-mark-remover-pearl.vercel.app.";
   }
 
   if (/(location|based|city|where)/.test(q)) {

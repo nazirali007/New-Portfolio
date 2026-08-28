@@ -13,7 +13,7 @@ export default function ProjectsSection() {
             </h2>
           </div>
           <p className="text-sm text-[var(--ink-muted)] font-mono max-w-xs hidden md:block">
-            Client and personal builds. Click through to source.
+            Client work plus my own products — personal builds open live.
           </p>
         </Reveal>
         <CardSection />

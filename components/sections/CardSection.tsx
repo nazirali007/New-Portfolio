@@ -10,6 +10,7 @@ type Project = {
   description: string;
   url: string;
   tag?: string;
+  personal?: boolean;
 };
 
 const projects: Project[] = [
@@ -18,17 +19,19 @@ const projects: Project[] = [
     year: "2026",
     technology: ["Next.js", "Prisma", "PostgreSQL", "Auth.js"],
     description:
-      "Tracks every vehicle's service history and predicts when maintenance is due from your driving pattern — not just when you happen to open the app. A daily background job estimates today's odometer reading from past updates and emails you before something's overdue.",
-    url: "https://github.com/nazirali007/maintenance_Reminder",
+      "My own full-stack product — tracks every vehicle's service history and predicts when maintenance is due from the owner's driving pattern, not just when they open the app. A daily background job estimates today's odometer from past updates and emails before something's overdue.",
+    url: "https://carsalahkar.site/dashboard",
     tag: "Latest",
+    personal: true,
   },
   {
     name: "WaterMark Remover",
     year: "2026",
     technology: ["Next.js", "React", "TypeScript"],
     description:
-      "A web application that removes watermarks from images with a clean, intuitive interface and fast processing.",
-    url: "https://github.com/nazirali007/WaterMark-Remover",
+      "A personal side project that removes watermarks from images with a clean, intuitive interface and fast processing — built, deployed, and owned end to end.",
+    url: "https://water-mark-remover-pearl.vercel.app/",
+    personal: true,
   },
   {
     name: "Url Shortener",
@@ -121,10 +124,10 @@ export default function CardSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
         className="project-featured group block"
-        aria-label={`View ${featured.name} on GitHub`}
+        aria-label={`View ${featured.name}`}
       >
         <div className="project-visual">
-          <span className="visual-tag">{featured.tag ?? "Featured"}</span>
+          <span className="visual-tag">{featured.tag ?? (featured.personal ? "Personal" : "Featured")}</span>
           <span className="visual-number" aria-hidden="true">
             01
           </span>
@@ -132,7 +135,7 @@ export default function CardSection() {
         <div className="project-featured-body">
           <div>
             <p className="font-mono text-[11px] text-[var(--ink-subtle)] uppercase tracking-widest mb-3">
-              {featured.year} — Featured
+              {featured.year} — {featured.personal ? "Featured · Personal" : "Featured"}
             </p>
             <div className="flex items-start justify-between gap-4 mb-3">
               <h3 className="font-display text-2xl sm:text-3xl text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors leading-tight">
@@ -173,11 +176,16 @@ export default function CardSection() {
               target="_blank"
               rel="noopener noreferrer"
               className="project-tile group"
-              aria-label={`View ${project.name} on GitHub`}
+              aria-label={`View ${project.name}`}
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="font-mono text-[11px] text-[var(--ink-subtle)]">
+                <span className="font-mono text-[11px] text-[var(--ink-subtle)] uppercase tracking-wider flex items-center gap-2">
                   {String(i + 2).padStart(2, "0")} — {project.year}
+                  {project.personal && (
+                    <span className="text-[10px] text-[var(--accent)] border border-[var(--accent)]/30 px-1.5 py-0.5 rounded">
+                      Personal
+                    </span>
+                  )}
                 </span>
                 <ArrowIcon />
               </div>
