@@ -77,6 +77,7 @@ Git & GitHub, Vercel, Webpack, SSR / SSG, CI/CD, SEO, Performance optimization, 
    - Shortens long URLs into concise, shareable links with analytics tracking.
    - Stack: Next.js, Redux, JavaScript.
    - Repo: https://github.com/nazirali007/url-shortner
+   - Live: https://url-shortner-pi-brown.vercel.app/
 
 4. **Dating App Admin Panel** (2024)
    - Admin panel for a dating platform facilitating client-provider matchmaking.
